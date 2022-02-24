@@ -1,5 +1,6 @@
 package com.example.hilttest01
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hilttest01.data.source.DefaultRepository
@@ -7,6 +8,7 @@ import com.example.hilttest01.data.source.Repository
 import com.example.hilttest01.data.source.local.DataModel
 import com.example.hilttest01.data.source.local.TestDataModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -22,7 +24,7 @@ class MainViewModel @Inject constructor(
 
     val user: Flow<DataModel?> =  repository.getOne()
 
-    private val size: Flow<Int> = repository.getSize()
+    val size: Flow<Int> = repository.getSize()
 
 //    fun getOne(): DataModel? {
 //
@@ -34,10 +36,12 @@ class MainViewModel @Inject constructor(
 //                repository.addOne(DataModel(0, "123", "456"))
 //            }
 
-            delay(3000)
+//            delay(3000)
             size.collect {
                 if (it == 0) {
                     repository.addOne(TestDataModel.data)
+                    Log.d("!!!!", "init: ")
+                    cancel()
                 }
             }
         }

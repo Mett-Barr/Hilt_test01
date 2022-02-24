@@ -7,7 +7,6 @@ import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.hilttest01.MainCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
@@ -31,9 +30,6 @@ class UserDaoTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
-    @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
-
     @Before
     fun initDB() {
         database = Room.inMemoryDatabaseBuilder(
@@ -46,7 +42,7 @@ class UserDaoTest {
     fun closeDB() = database.close()
 
     @Test
-    fun addDao() = runBlockingTest{
+    fun addDao() = runBlockingTest {
         database.userDao().addUser(TestDataModel.data)
 
         val value = database.userDao().getOneFlow().first()
@@ -63,16 +59,16 @@ class UserDaoTest {
         assertEquals(value, null)
     }
 
-    @Test
-    fun test() {
-       assertEquals(1, 0)
-    }
+//    @Test
+//    fun test() {
+//        assertEquals(1, 0)
+//    }
 }
 
 @RunWith(AndroidJUnit4::class)
 class Test {
     @Test
     fun test() {
-        assertEquals(1, 0)
+        assertEquals(1, 1)
     }
 }
